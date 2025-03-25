@@ -12,15 +12,15 @@
     <string name="username">Username</string>
     <string name="sportpro">Sport pro</string>
     <string-array name="option_toasts">
-        <item>You choose the (name1),(Brand1),(Price1)</item>
-        <item>You choose the (name2),(Brand2),(Price2)</item>
-        <item>You choose the (name3),(Brand3),(Price3)</item>
-        <item>You choose the (name4),(Brand4),(Price4)</item>
-        <item>You choose the (name5),(Brand5),(Price5)</item>
-        <item>You choose the (name6),(Brand6),(Price6)</item>
-        <item>You choose the (name7),(Brand7),(Price7)</item>
-        <item>You choose the (name8),(Brand8),(Price8)</item>
-        <item>You choose the (name9),(Brand9),(Price9)</item>
-        <item>You choose the (name10),(Brand10),(Price10)</item>
+        <item>You choose the (10635 Shirt),(Yonex),($95)</item>
+        <item>You choose the (Pegasus 41),(Nike),($219)</item>
+        <item>You choose the (Air Jordan 1 Low),(Nike),($189)</item>
+        <item>You choose the (Downshifter 13),(Nike),($99)</item>
+        <item>You choose the (Supernova Stride 2),(Adidas),($149)</item>
+        <item>You choose the (Copa 11Pure Firm Ground Boots),(Adidas),($349)</item>
+        <item>You choose the (Badminton Racquet Nanoflare 002),(Yonex),($80)</item>
+        <item>You choose the (Aero Sensor 200),(Yonex),($74)</item>
+        <item>You choose the (UEFA Champions League Competition),(Adidas),($89)</item>
+        <item>You choose the (Jordan Championship),(Nike),($75)</item>
     </string-array>
 </resources>

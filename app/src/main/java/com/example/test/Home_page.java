@@ -35,36 +35,39 @@ public class Home_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        // 初始化控件
+        // To find our Button ID
         RadioGroup radGroup = findViewById(R.id.radioGroup);
         Button btnChange = findViewById(R.id.btnpost);
 
-        // 动态缩放图片
+        // Initialize our image
         int targetWidthPx = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                80, // 100dp
+                80, // To define picture size
+                //To get our image resource
                 getResources().getDisplayMetrics()
         );
-
+        //To fix our picture if they are big
         for (int i = 0; i < radioButtonIds.length; i++) {
             RadioButton rb = findViewById(radioButtonIds[i]);
             scaleRadioButtonDrawable(rb, drawableResources[i], targetWidthPx);
         }
 
-        // 设置默认选中
+        // To set a button is choice
         //radGroup.check(R.id.btn1);
 
-        // 点击事件
+        // Click activity
         btnChange.setOnClickListener(v -> handleSelection(radGroup));
     }
 
     private void handleSelection(RadioGroup radGroup) {
+        //Define select button id to match customer selected button
         int selectedId = radGroup.getCheckedRadioButtonId();
+        //if there is no button be chose, back a wrong message
         if (selectedId == -1) {
             Toast.makeText(this, R.string.please_select, Toast.LENGTH_SHORT).show();
             return;
         }
-
+        //if there is a button which is chose. find the id in array
         int index = Arrays.binarySearch(radioButtonIds, selectedId);
         if (index >= 0) {
             String message = getResources().getStringArray(R.array.option_toasts)[index];
@@ -72,31 +75,31 @@ public class Home_page extends AppCompatActivity {
         }
     }
 
-    // 优化后的图片缩放方法
+    //
     private void scaleRadioButtonDrawable(RadioButton radioButton, int drawableResId, int targetWidthPx) {
         Drawable originalDrawable = ContextCompat.getDrawable(this, drawableResId);
+        //if no data, the function will return.
         if (originalDrawable == null) return;
-
+        //running the function until all element has been solve.
         try {
             Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
             float aspectRatio = originalBitmap.getHeight() / (float) originalBitmap.getWidth();
             int targetHeightPx = Math.round(targetWidthPx * aspectRatio);
-
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(
                     originalBitmap,
                     targetWidthPx,
                     targetHeightPx,
                     true
             );
-
             Drawable scaledDrawable = new BitmapDrawable(getResources(), scaledBitmap);
             scaledDrawable.setBounds(0, 0, targetWidthPx, targetHeightPx);
             radioButton.setCompoundDrawables(scaledDrawable, null, null, null);
-
+            //clean our memory space
             if (originalBitmap != scaledBitmap) {
                 originalBitmap.recycle();
             }
         } catch (Exception e) {
+            //Print a message on console
             Log.e("ScaleDrawable", "Error scaling drawable", e);
         }
     }

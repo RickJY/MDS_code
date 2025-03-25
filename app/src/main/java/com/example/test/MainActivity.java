@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
         Button guestButton = findViewById(R.id.guestButton);
 
-        // 设置输入过滤器，限制只能输入小写字母和数字
+        // Set a filter to accept the character and number.
         InputFilter filter = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     char ch = source.charAt(i);
                     if (!Character.isLowerCase(ch) && !Character.isDigit(ch)) {
-                        return ""; // 拒绝不符合要求的输入
+                        return ""; // To refuse the illegal input.
                     }
                 }
                 return null;
@@ -46,24 +46,25 @@ public class MainActivity extends AppCompatActivity {
         usernameEditText.setFilters(new InputFilter[]{filter});
         passwordEditText.setFilters(new InputFilter[]{filter});
 
-        // 登录按钮点击事件
+        // Click the Login Button activity
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-
+                //If the account and the passwd is correct, it will go to next page
                 if (username.equals(VALID_USERNAME) && password.equals(VALID_PASSWORD)) {
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, Home_page.class);
                     startActivity(intent);
                 } else {
+                    //If the account and the passwd is incorrect, print a txt to show wrong message
                     Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // 访客模式按钮点击事件
+        // Click the Guest Button activity
         guestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
