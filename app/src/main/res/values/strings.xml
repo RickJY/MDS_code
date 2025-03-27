@@ -11,6 +11,7 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="sportpro">Sport pro</string>
+    <string name="go_to_better_page">Go to Better Page</string>
     <string-array name="option_toasts">
         <item>You choose the (10635 Shirt),(Yonex),($95)</item>
         <item>You choose the (Pegasus 41),(Nike),($219)</item>

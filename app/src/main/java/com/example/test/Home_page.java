@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -57,6 +58,12 @@ public class Home_page extends AppCompatActivity {
 
         // Click activity
         btnChange.setOnClickListener(v -> handleSelection(radGroup));
+
+        Button btnGoTopage2 = findViewById(R.id.btnGoToPage2);
+        btnGoTopage2.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_page.this, HomePage2Activity.class);
+            startActivity(intent);
+        });
     }
 
     private void handleSelection(RadioGroup radGroup) {

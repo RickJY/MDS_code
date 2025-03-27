@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 //If the account and the passwd is correct, it will go to next page
                 if (username.equals(VALID_USERNAME) && password.equals(VALID_PASSWORD)) {
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, Home_page.class);
+                    Intent intent = new Intent(MainActivity.this, HomePage2Activity.class);
                     startActivity(intent);
                 } else {
                     //If the account and the passwd is incorrect, print a txt to show wrong message
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Logged in as Guest", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, Home_page.class);
+                Intent intent = new Intent(MainActivity.this, HomePage2Activity.class);
                 startActivity(intent);
             }
         });

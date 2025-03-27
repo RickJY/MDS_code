@@ -12,13 +12,13 @@
         android:id="@+id/companyName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sportpro"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:background="@android:color/holo_blue_bright"
         android:gravity="end"
         android:padding="6dp"
-        android:background="@android:color/holo_blue_bright"
-        android:textColor="@android:color/white"/>
+        android:text="@string/sportpro"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <!-- 可滚动内容 -->
     <ScrollView
@@ -129,6 +129,16 @@
                     android:text="@string/StudentID"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btnGoToPage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/go_to_better_page"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:backgroundTint="#2196F3"
+                    android:textColor="#FFFFFF"/>
             </LinearLayout>
 
         </LinearLayout>
