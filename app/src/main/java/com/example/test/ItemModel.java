@@ -1,12 +1,11 @@
 package com.example.test;
 
-
 //define our recycle elements
-public class ItemModel {  // 这里修改为大写 I
+public class ItemModel {
     private final int imageResId;
     private final String itemName;
     private  final int originalIndex;
-    public ItemModel(int imageResId, String itemName, int originalIndex) {  // 现在类名与构造方法一致
+    public ItemModel(int imageResId, String itemName, int originalIndex) {
         this.imageResId = imageResId;
         this.itemName = itemName;
         this.originalIndex = originalIndex;

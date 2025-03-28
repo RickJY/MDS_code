@@ -18,7 +18,7 @@
         android:id="@+id/itemText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Describe"
+        android:text="@string/describe"
         android:textSize="16sp"
         android:padding="4dp" />
 
@@ -26,6 +26,6 @@
         android:id="@+id/itemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click Me"
+        android:text="@string/get_me"
         android:padding="4dp" />
 </LinearLayout>
