@@ -6,7 +6,7 @@
     android:padding="8dp"
     android:fitsSystemWindows="true">
 
-    <!-- 公司名称 -->
+    <!-- company name -->
     <TextView
         android:id="@+id/companyName"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 搜索框 -->
+    <!-- Search View -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/companyName"
         app:iconifiedByDefault="false"/>
 
-    <!-- 列表 -->
+    <!-- Item_gallery_list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchView"/>
 
-    <!-- 设计者姓名 -->
+    <!-- Design name -->
     <TextView
         android:id="@+id/designByText"
         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 学生ID -->
+    <!-- Design student ID -->
     <TextView
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
