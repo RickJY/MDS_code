@@ -1,50 +1,61 @@
 package com.example.test;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage2Activity extends AppCompatActivity {
-    private List<ItemModel> itemList;  // The original list of items
-    private List<ItemModel> filteredList; // The filtered list based on search input
+    private List<ItemModel> itemList; // List to store all items
+    private List<ItemModel> filteredList; // List to store filtered items
     private HomePage2Adapter itemAdapter; // Adapter for the RecyclerView
+    private ShoppingCart shoppingCart; // Shopping cart object to manage items
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_2);
 
-        // Initialize and configure the SearchView
-        // SearchView for filtering the list
+        // Attempt to retrieve the ShoppingCart object from the Intent.
+        shoppingCart = getIntent().getParcelableExtra("cart");
+        // If no ShoppingCart object is found in the Intent, create a new one.
+        if (shoppingCart == null) {
+            shoppingCart = new ShoppingCart();
+        }
+
+        // Initialize the SearchView.
         SearchView searchView = findViewById(R.id.searchView);
-        searchView.clearFocus(); // Remove focus to prevent the keyboard from appearing on startup
+        searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false; // We do not handle the search submit separately
+                return false; // Do nothing when the query is submitted.
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterList(newText); // Filter the list as user types
+                filterList(newText); // Filter the item list based on the new text.
                 return false;
             }
         });
 
-        // Initialize and configure the RecyclerView
-        // RecyclerView to display the list of items
+        // Initialize the RecyclerView.
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true); // Optimize performance since item size will not change
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Use a vertical linear layout
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize the item list with predefined items
-        //define three elements for recyclerview array
-        //First is our image resource path, second is describe, third is index for searching suitable string
+        // Initialize the list of all items.
         itemList = new ArrayList<>();
         itemList.add(new ItemModel(R.drawable.develop0, "T-shirt", 0));
         itemList.add(new ItemModel(R.drawable.develop1, "Shoe", 1));
@@ -57,41 +68,62 @@ public class HomePage2Activity extends AppCompatActivity {
         itemList.add(new ItemModel(R.drawable.develop8, "Football", 8));
         itemList.add(new ItemModel(R.drawable.develop9, "Basketball", 9));
 
-        // Initialize filteredList with all items initially
+        // Initially, the filtered list is the same as the full item list.
         filteredList = new ArrayList<>(itemList);
 
-        // Set up the adapter with the filtered list
-        itemAdapter = new HomePage2Adapter(filteredList);
+        // Initialize the adapter and set it to the RecyclerView.
+        itemAdapter = new HomePage2Adapter(filteredList, shoppingCart);
         recyclerView.setAdapter(itemAdapter);
+
+        // Initialize the BottomNavigationView.
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home); // Set the default selected item.
+
+        // Set up the listener for BottomNavigationView item clicks.
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                return true; // Stay on the home page.
+            } else if (itemId == R.id.nav_cart) {
+                // Navigate to the ShoppingCartActivity.
+                Intent intent = new Intent(HomePage2Activity.this, ShoppingCartActivity.class);
+                intent.putExtra("cart", shoppingCart); // Pass the ShoppingCart object to the Intent.
+                startActivity(intent);
+                return true;
+            } else {
+                return false; // Do nothing for other items.
+            }
+        });
     }
 
-    /**
-     * Filters the list based on the input text from the SearchView.
-     *
-     * @param text The text entered by the user in the SearchView.
-     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // Attempt to retrieve the ShoppingCart object from the Intent when the activity is relaunched.
+        ShoppingCart cart = intent.getParcelableExtra("cart");
+        if (cart != null) {
+            shoppingCart = cart; // Update the member variable shoppingCart.
+        }
+    }
+
+    // Filter the item list based on the search text.
     private void filterList(String text) {
         if (text.isEmpty()) {
-            // If search query is empty, reset to the original list
-            filteredList = new ArrayList<>(itemList);
+            filteredList = new ArrayList<>(itemList); // If the text is empty, show all items.
         } else {
-            // Otherwise, filter the list based on the search query
             List<ItemModel> tempList = new ArrayList<>();
             for (ItemModel item : itemList) {
-                // Case-insensitive search for items containing the input text
                 if (item.getItemName().toLowerCase().contains(text.toLowerCase())) {
-                    tempList.add(item);
+                    tempList.add(item); // Add items that match the search text.
                 }
             }
             filteredList = tempList;
         }
 
-        // Show a toast message if no items match the search
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show(); // Show a toast if no items match.
         }
 
-        // Update the adapter with the new filtered list
-        itemAdapter.setFilteredList(filteredList);
+        itemAdapter.setFilteredList(filteredList); // Update the adapter with the filtered list.
     }
 }

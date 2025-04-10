@@ -14,6 +14,9 @@
     <string name="go_to_better_page">Go to Better Page</string>
     <string name="get_me">Get me</string>
     <string name="describe">Describe</string>
+    <string name="no_data_found">No data found</string>
+    <string name="add_text">+</string>
+    <string name="minus_text">-</string>
     <string-array name="option_toasts">
         <item>You choose the (10635 Shirt),(Yonex),($95)</item>
         <item>You choose the (Pegasus 41),(Nike),($219)</item>

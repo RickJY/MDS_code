@@ -1,7 +1,6 @@
 package com.example.test;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,68 +15,73 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class HomePage2Adapter extends RecyclerView.Adapter<HomePage2Adapter.ViewHolder> {
-    private final List<ItemModel> itemList; // List of items to be displayed
+    private final List<ItemModel> itemList; // List of items to display in the RecyclerView
+    private final ShoppingCart shoppingCart; // Shopping cart object to manage added items
 
-    public HomePage2Adapter(List<ItemModel> itemList) {
+    // Constructor to initialize the adapter with item list and shopping cart
+    public HomePage2Adapter(List<ItemModel> itemList, ShoppingCart shoppingCart) {
         this.itemList = itemList;
+        this.shoppingCart = shoppingCart;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the item layout
+        // Inflate the item layout for each item in the RecyclerView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gallery, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get the current item
-        ItemModel item = itemList.get(position);
+        ItemModel item = itemList.get(position); // Get the item at the current position
 
-        // Set item image and text
+        // Set the image and text for the item
         holder.imageView.setImageResource(item.getImageResId());
         holder.textView.setText(item.getItemName());
 
-        // Set button click listener
+        // Set click listener for the "get me" button
         holder.button.setOnClickListener(v -> {
-            int originalIndex = item.getOriginalIndex(); // Retrieve the original index of the item
-            Context context = holder.itemView.getContext(); // Get the context
-            String[] toasts = context.getResources().getStringArray(R.array.option_toasts); // Retrieve string array from resources
-
-            // Show a toast message based on the original index
-            if (originalIndex < toasts.length) {
-                Toast.makeText(context, toasts[originalIndex], Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Selected item", Toast.LENGTH_SHORT).show();
+            Resources res = holder.itemView.getContext().getResources();
+            String[] messages = res.getStringArray(R.array.option_toasts); // Get messages from resources
+            StringBuilder message = new StringBuilder();
+            for (String s : messages) {
+                message.append(s).append("\n"); // Append each message with a newline
             }
+            Toast.makeText(holder.itemView.getContext(), message.toString(), Toast.LENGTH_SHORT).show(); // Show messages in a Toast
+        });
+
+        // Set click listener for the "add to cart" button
+        holder.addToCartButton.setOnClickListener(v -> {
+            shoppingCart.addItem(item); // Add the item to the shopping cart
         });
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return itemList.size(); // Return the number of items in the list
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    // Method to update the item list with filtered results
     public void setFilteredList(List<ItemModel> filteredList) {
-        itemList.clear(); // Clear the current list
-        itemList.addAll(filteredList); // Add all filtered items
-        notifyDataSetChanged(); // Notify the adapter that the data has changed
+        itemList.clear(); // Clear the current item list
+        itemList.addAll(filteredList); // Add the filtered items to the list
+        notifyDataSetChanged(); // Notify the RecyclerView that the data has changed
     }
 
-
+    // ViewHolder class to hold the views for each item in the RecyclerView
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView; // Image view for displaying item image
-        TextView textView; // Text view for displaying item name
-        Button button; // Button for user interaction
-
+        ImageView imageView;
+        TextView textView;
+        Button button;
+        Button addToCartButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.itemImage); // Initialize image view
-            textView = itemView.findViewById(R.id.itemText); // Initialize text view
-            button = itemView.findViewById(R.id.itemButton); // Initialize button
+            imageView = itemView.findViewById(R.id.itemImage);
+            textView = itemView.findViewById(R.id.itemText);
+            button = itemView.findViewById(R.id.itemButton);
+            addToCartButton = itemView.findViewById(R.id.addToCartButton);
         }
     }
 }
